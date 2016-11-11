@@ -155,14 +155,15 @@ def process_map(file_in, validate):
             el = shape_element(element)
             if el:
                 if element.tag == 'node':
-                    nodes_writer.writerow(encode_helper(el['node']))
-                    node_tags_writer.writerows(encode_helper(el['node_tags']))
+                    nodes_writer.writerow(el['node'])
+                    node_tags_writer.writerows(el['node_tags'])
 
                 elif element.tag == 'way':
                     ways_writer.writerow(el['way'])
-                    way_nodes_writer.writerows(encode_helper(el['way_nodes']))
-                    way_tags_writer.writerows(encode_helper(el['way_tags']))
+                    way_nodes_writer.writerows(el['way_nodes'])
+                    way_tags_writer.writerows(el['way_tags'])
 
 
 if __name__ == '__main__':
-    process_map(OSM_FILE, validate=False)
+    # process_map(OSM_FILE, validate=False) # uncomment to use script
+    pass
