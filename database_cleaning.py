@@ -29,14 +29,14 @@ def clean_ways_tags_and_ways_outside_berlin():
 
     def get_postcodes_to_change_ways_tags(db):
         all_ids = [n for n in db.execute("SELECT id, value FROM ways_tags WHERE key = 'postcode'").fetchall()]
-        ids_to_remove = []
+        result = []
         for id_, plz in all_ids:
             if len(plz) > 5:
-                ids_to_remove.append(id_)
+                result.append(id_)
             elif plz.isnumeric():
                 if int(plz) < 10115 or int(plz) > 14199:
-                    ids_to_remove.append(id_)
-        return list(set(ids_to_remove))
+                    result.append(id_)
+        return list(set(result))
 
     ids_to_remove = get_postcodes_to_change_ways_tags(c_clean)
     print("clean_ways_tags_and_ways_outside_berlin")
@@ -49,9 +49,9 @@ def clean_ways_tags_and_ways_outside_berlin():
         if i % 100 == 0:
             print(i * 5, " of ", total)
         c_clean.execute("DELETE FROM ways_tags WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ?",
-                        (id_1, id_2, id_3, id_4, id_5 ))
+                        (id_1, id_2, id_3, id_4, id_5))
         c_clean.execute("DELETE FROM ways WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ?",
-                        (id_1, id_2, id_3, id_4, id_5 ))
+                        (id_1, id_2, id_3, id_4, id_5))
         conn_clean.commit()
 
 
@@ -59,14 +59,14 @@ def clean_nodes_tags_and_nodes_outside_berlin():
 
     def get_postcodes_to_change_nodes_tags(db):
         all_ids = [n for n in db.execute("SELECT id, value FROM nodes_tags WHERE key = 'postcode'").fetchall()]
-        ids_to_remove = []
+        result = []
         for id_, plz in all_ids:
             if len(plz) > 5:
-                ids_to_remove.append(id_)
+                result.append(id_)
             elif plz.isnumeric():
                 if int(plz) < 10115 or int(plz) > 14199:
-                    ids_to_remove.append(id_)
-        return list(set(ids_to_remove))
+                    result.append(id_)
+        return list(set(result))
 
     ids_to_remove = get_postcodes_to_change_nodes_tags(c_clean)
     print("clean_nodes_tags_and_nodes_outside_berlin")
@@ -79,9 +79,9 @@ def clean_nodes_tags_and_nodes_outside_berlin():
         if i % 100 == 0:
             print(i * 5, " of ", total)
         c_clean.execute("DELETE FROM nodes_tags WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ?",
-                        (id_1, id_2, id_3, id_4, id_5 ))
+                        (id_1, id_2, id_3, id_4, id_5))
         c_clean.execute("DELETE FROM nodes WHERE id = ? OR id = ? OR id = ? OR id = ? OR id = ?",
-                        (id_1, id_2, id_3, id_4, id_5 ))
+                        (id_1, id_2, id_3, id_4, id_5))
         conn_clean.commit()
 
 
