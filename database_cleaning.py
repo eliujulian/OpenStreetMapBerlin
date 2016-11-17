@@ -89,17 +89,21 @@ def clean_inconsistent_keys():
     print("clean inconsistent keys nodes_tags")
     statement = """SELECT * FROM nodes_tags"""
     data = [n for n in c_clean.execute(statement).fetchall() if not n[1].islower()]
+    data = [n for n in data if n[1].isalpha()]
     for i, n in enumerate(data):
         if i % 100 == 0:
             print(i, "of", len(data))
+            print(n)
         c_clean.execute("UPDATE nodes_tags SET key = ? WHERE id = ?", (n[1].lower(), n[0]))
         conn_clean.commit()
 
     print("clean inconsistent keys ways_tags")
     data = [x for x in c_clean.execute("SELECT * FROM ways_tags").fetchall() if not x[1].islower()]
+    data = [n for n in data if n[1].isalpha()]
     for i, n in enumerate(data):
         if i % 100 == 0:
             print(i, "of", len(data))
+            print(n)
         c_clean.execute("UPDATE ways_tags SET key = ? WHERE id = ?", (n[1].lower(), n[0]))
         conn_clean.commit()
 
@@ -110,7 +114,7 @@ def clean_maxspeed():
     data = [n for n in c_clean.execute("SELECT * FROM ways_tags WHERE key = 'maxspeed'").fetchall()]
 
     for i, n in enumerate(data):
-        if i % 100 == 0:
+        if i % 500 == 0:
             print(i, "of", len(data))
 
         if n[2].isnumeric():
@@ -128,3 +132,6 @@ clean_ways_tags_and_ways_outside_berlin()
 clean_nodes_tags_and_nodes_outside_berlin()
 clean_inconsistent_keys()
 clean_maxspeed()
+
+conn_clean.close()
+conn_dirty.close()
