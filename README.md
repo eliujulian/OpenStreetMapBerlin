@@ -1,5 +1,5 @@
 # Open Street Map Berlin Study
 
-Data preparation see data_preparation.py, the analysis is found in the jupyter notebook.
+The analysis is found in the jupyter notebook. Data preparation see data_preparation.py, database_cleaning.py and database_intergration_tests.py
 
-Nov. 11, 2016 Eliu Schmitt, mail@eliu.de
+Nov. 18, 2016 Eliu Schmitt, mail@eliu.de
